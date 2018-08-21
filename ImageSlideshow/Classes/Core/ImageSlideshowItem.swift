@@ -28,7 +28,7 @@ open class ImageSlideshowItem: UIScrollView, UIScrollViewDelegate {
 
     /// If set to true image is initially zoomed in
     open var zoomInInitially = false
-    
+
     /// Maximum zoom scale
     open var maximumScale: CGFloat = 2.0
 
@@ -127,24 +127,26 @@ open class ImageSlideshowItem: UIScrollView, UIScrollViewDelegate {
             activityIndicator?.show()
             image.load(to: self.imageView) {[weak self] image in
                 // set image to nil if there was a release request during the image load
+                /* Do not set the image if you are using SDWebImage
                 if let imageRelease = self?.imageReleased, imageRelease {
                     self?.imageView.image = nil
                 }else{
                     self?.imageView.image = image
                 }
+                */
                 self?.activityIndicator?.hide()
                 self?.loadFailed = image == nil
                 self?.isLoading = false
             }
         }
     }
-    
+
     func releaseImage() {
         imageReleased = true
         cancelPendingLoad()
         self.imageView.image = nil
     }
-    
+
     public func cancelPendingLoad() {
         image.cancelLoad?(on: imageView)
     }
