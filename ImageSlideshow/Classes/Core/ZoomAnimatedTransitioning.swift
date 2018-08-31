@@ -298,7 +298,13 @@ class ZoomOutAnimator: ZoomAnimator, UIViewControllerAnimatedTransitioning {
             referenceImageView.alpha = 0
 
             let referenceSlideshowViewFrame = containerView.convert(referenceImageView.bounds, from: referenceImageView)
-            transitionViewFinalFrame = referenceSlideshowViewFrame
+
+            if (referenceSlideshowViewFrame == referenceImageView.bounds && referenceSlideshowView != nil) {
+                let referenceSlideshowViewFrame = containerView.convert(referenceSlideshowView!.bounds, from: referenceSlideshowView)
+                transitionViewFinalFrame = referenceSlideshowViewFrame
+            } else {
+                transitionViewFinalFrame = referenceSlideshowViewFrame
+            }
 
             // do a frame scaling when AspectFit content mode enabled
             if fromViewController.slideshow.currentSlideshowItem?.imageView.image != nil && referenceImageView.contentMode == UIViewContentMode.scaleAspectFit {
